@@ -185,6 +185,7 @@ export const SubscriptionCreate = ({
       <Header {...{ profile }} />
       <div className="main-content">
         <PaymentProcessing
+          provider="paypal"
           className={classNames({
             hidden: !transactionInProgress,
           })}
