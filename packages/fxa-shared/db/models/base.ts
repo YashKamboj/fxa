@@ -10,6 +10,7 @@ import { intBoolTransformer, uuidTransformer } from '../transformers';
  * Base Model for helpers that should be present on all models.
  */
 export class BaseModel extends Model {
+  static readonly useLimitInFirst = true;
   protected $uuidFields: string[] = [];
   protected $intBoolFields: string[] = [];
 

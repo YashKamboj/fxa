@@ -29,7 +29,7 @@ describe('db, session tokens expire:', () => {
     log = mocks.mockLog();
     tokens = require(`${LIB_DIR}/tokens`)(log, { tokenLifetimes });
     const DB = proxyquire(`${LIB_DIR}/db`, {
-      './pool': function () {
+      '../pool': function () {
         return pool;
       },
     })(
@@ -92,7 +92,7 @@ describe('db, session tokens do not expire:', () => {
     log = mocks.mockLog();
     tokens = require(`${LIB_DIR}/tokens`)(log, { tokenLifetimes });
     const DB = proxyquire(`${LIB_DIR}/db`, {
-      './pool': function () {
+      '../pool': function () {
         return pool;
       },
     })(
@@ -156,10 +156,10 @@ describe('db with redis disabled:', () => {
     log = mocks.mockLog();
     tokens = require(`${LIB_DIR}/tokens`)(log, { tokenLifetimes });
     const DB = proxyquire(`${LIB_DIR}/db`, {
-      './pool': function () {
+      '../pool': function () {
         return pool;
       },
-      './redis': () => {},
+      '../redis': () => {},
     })({ redis: {}, tokenLifetimes, tokenPruning: {} }, log, tokens, {});
     return DB.connect({}).then((result) => (db = result));
   });
@@ -312,10 +312,10 @@ describe('redis enabled, token-pruning enabled:', () => {
     log = mocks.mockLog();
     tokens = require(`${LIB_DIR}/tokens`)(log, { tokenLifetimes });
     const DB = proxyquire(`${LIB_DIR}/db`, {
-      './pool': function () {
+      '../pool': function () {
         return pool;
       },
-      './redis': (...args) => {
+      '../redis': (...args) => {
         assert.equal(args.length, 2, 'redisPool was passed two arguments');
         assert.equal(args[0].foo, 'bar', 'redisPool was passed config');
         assert.equal(
@@ -561,10 +561,10 @@ describe('redis enabled, token-pruning disabled:', () => {
     log = mocks.mockLog();
     tokens = require(`${LIB_DIR}/tokens`)(log, { tokenLifetimes });
     const DB = proxyquire(`${LIB_DIR}/db`, {
-      './pool': function () {
+      '../pool': function () {
         return pool;
       },
-      './redis': (...args) => {
+      '../redis': (...args) => {
         assert.equal(args.length, 2, 'redisPool was passed two arguments');
         assert.equal(args[0].foo, 'bar', 'redisPool was passed config');
         assert.equal(

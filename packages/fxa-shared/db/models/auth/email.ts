@@ -4,8 +4,9 @@
 
 import { AuthBaseModel } from './auth-base';
 
-export class Emails extends AuthBaseModel {
+export class Email extends AuthBaseModel {
   public static tableName = 'emails';
+  public static idColumn = 'id';
 
   protected $uuidFields = ['uid', 'emailCode'];
   protected $intBoolFields = ['isVerified', 'isPrimary'];

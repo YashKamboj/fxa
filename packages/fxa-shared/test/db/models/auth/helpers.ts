@@ -23,6 +23,10 @@ export const accountTable = fs.readFileSync(
   path.join(thisDir, './accounts.sql'),
   'utf8'
 );
+export const devicesTable = fs.readFileSync(
+  path.join(thisDir, './devices.sql'),
+  'utf8'
+);
 export const emailsTable = fs.readFileSync(
   path.join(thisDir, './emails.sql'),
   'utf8'
@@ -92,14 +96,15 @@ export async function testDatabaseSetup(): Promise<Knex> {
   });
 
   await knex.raw(accountTable);
+  await knex.raw(devicesTable);
   await knex.raw(emailsTable);
   await knex.raw(accountCustomersTable);
   await knex.raw(paypalBATable);
 
-  /* Debugging Assistance
+  /*/ Debugging Assistance
   knex.on('query', (data) => {
     console.dir(data);
   });
-  */
+  //*/
   return knex;
 }

@@ -5,6 +5,8 @@ import { uuidTransformer } from '../../transformers';
 import { Account } from './account';
 import { AccountCustomers } from './account-customers';
 import { AuthBaseModel } from './auth-base';
+import { Device } from './device';
+import { Email } from './email';
 import { SessionToken } from './session-token';
 import { PayPalBillingAgreements } from './paypal-ba';
 
@@ -65,6 +67,19 @@ export function accountByUid(uid: string, options?: AccountOptions) {
     query = query.where({ uid: uidBuffer });
   }
   return query.first();
+}
+
+export async function accountDevices(
+  uid: string
+): Promise<Device[] | undefined> {
+  const knex = Device.knex();
+  const uidBuffer = uuidTransformer.to(uid);
+  const [result] = await knex.raw('Call accountDevices_16(?)', uidBuffer);
+  const rowPacket = result.shift() as any[];
+  if (rowPacket.length === 0) {
+    return;
+  }
+  return rowPacket.map((row) => Device.fromDatabaseJson(row));
 }
 
 export async function createAccountCustomer(
@@ -223,4 +238,10 @@ export function batchAccountUpdate(uids: Buffer[], updateFields: Accountish) {
   return Account.query().whereIn('uid', uids).update(updateFields);
 }
 
-export { Account, AccountCustomers, AuthBaseModel, PayPalBillingAgreements };
+export {
+  Account,
+  AccountCustomers,
+  AuthBaseModel,
+  Email,
+  PayPalBillingAgreements,
+};

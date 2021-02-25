@@ -31,7 +31,12 @@ async function run(config) {
   const log = require('../lib/log')({ ...config.log, statsd });
 
   // Establish database connection and bind instance to Model using Knex
-  setupAuthDatabase(config.database.mysql.auth);
+  const knex = setupAuthDatabase(config.database.mysql.auth);
+  if (['debug', 'verbose', 'trace'].includes(config.log.level)) {
+    knex.on('query', (data) => {
+      console.dir(data);
+    });
+  }
 
   // Set currencyHelper before stripe and paypal helpers, so they can use it.
   try {

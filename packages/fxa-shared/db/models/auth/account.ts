@@ -3,7 +3,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import { AuthBaseModel } from './auth-base';
-import { Emails } from './emails';
+import { Email } from './email';
+import { Device } from './device';
 
 export class Account extends AuthBaseModel {
   public static tableName = 'accounts';
@@ -15,11 +16,12 @@ export class Account extends AuthBaseModel {
   public createdAt!: number;
   public locale!: string;
   public email!: string;
-  public emails?: Emails[];
   public emailVerified!: boolean;
   public normalizedEmail!: string;
   public verifierSetAt!: number;
   public lockedAt!: number;
+  public devices?: Device[];
+  public emails?: Email[];
 
   public static relationMappings = {
     emails: {
@@ -27,7 +29,15 @@ export class Account extends AuthBaseModel {
         from: 'accounts.uid',
         to: 'emails.uid',
       },
-      modelClass: Emails,
+      modelClass: Email,
+      relation: AuthBaseModel.HasManyRelation,
+    },
+    devices: {
+      join: {
+        from: 'accounts.uid',
+        to: 'devices.uid',
+      },
+      modelClass: Device,
       relation: AuthBaseModel.HasManyRelation,
     },
   };
