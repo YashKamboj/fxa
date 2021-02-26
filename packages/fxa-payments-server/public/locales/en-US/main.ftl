@@ -303,6 +303,9 @@ plan-details-total-label = Total
 ## payment-processing
 payment-processing-message = Please wait while we process your payment...
 
+## payment-error
+payment-error-message = An unexpected error has occured while processing your payment, please try again.
+
 ## payment confirmation
 payment-confirmation-alert = Click here to download
 payment-confirmation-mobile-alert = Didn't open app? <a>Click Here</a>
